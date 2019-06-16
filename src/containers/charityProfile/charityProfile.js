@@ -3,15 +3,24 @@ import logo from "../../assets/charity2-01.png";
 import "./charityProfile.css";
 import "../../bootstrap/css/bootstrap.min.css";
 import {Button} from "react-bootstrap";
+import Popup from "../../components/Popup";
 class charityProfile extends Component {
     
     state  = {
         posts : [],
         name : "",
         image : "",
+        showPopup : false,
     }
 
-    
+    togglePopup = () => {  
+
+        this.setState({  
+             showPopup: !this.state.showPopup  
+        });  
+        console.log(this.state.showPopup);
+    }  
+        
 
     componentDidMount() {
         document.body.classList.add("height");
@@ -63,10 +72,21 @@ class charityProfile extends Component {
                         {element.Content.slice(0,150)}
                     </div>
                     <div>
-                        <Button variant="success" className = "posts_button" size="md">
+                        <Button onClick={this.togglePopup.bind(this)} variant="success" className = "posts_button" size="md">
                                 ادامه
                         </Button>
                     </div>
+                    
+                    <div>
+                        {this.state.showPopup ?  
+                        <Popup  
+                                text= {element.Content}  
+                                closePopup={this.togglePopup.bind(this)}  
+                        />  
+                        : null  
+                        }  
+                    </div>
+                    
                 </div>
              </div>
              )
@@ -110,8 +130,8 @@ class charityProfile extends Component {
                 <Button variant="primary" className= "button_pannel" size="lg" block>
                     پشتیبانی
                 </Button>
+              
                 
-
             </div>
         );
 
